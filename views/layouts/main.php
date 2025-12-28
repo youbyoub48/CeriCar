@@ -43,13 +43,16 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="<?= \yii\helpers\Url::to(['/site/index']) ?>">Home</a>
+              <a class="nav-link active" aria-current="page" href="<?= \yii\helpers\Url::to(['/site/index']) ?>">Voyager</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="<?= \yii\helpers\Url::to(['/site/about']) ?>&depart=Paris&arrivee=Marseille&personnes=1">About</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="<?= \yii\helpers\Url::to(['/site/test']) ?>">Test</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="<?= \yii\helpers\Url::to(['/site/reservation']) ?>">Mes Réservations</a>
             </li>
           </ul>
 

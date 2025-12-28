@@ -1,8 +1,13 @@
 <?php
 use yii\helpers\Url;
-use yii\bootstrap5\Html;
+use yii\web\JqueryAsset;
 
 $this->title = 'Inscription';
+
+$this->registerJsFile(
+    '@web/js/signup.js',
+    ['depends' => [JqueryAsset::class]]
+);
 ?>
 
 <div class="bg-img d-flex justify-content-center align-items-center auth-bg">

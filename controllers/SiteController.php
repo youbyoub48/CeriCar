@@ -72,17 +72,12 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if(Yii::$app->request->isGet){
-            return $this->render("login");
-        }
-
-
-        $post = Yii::$app->request->post();
+        if(Yii::$app->request->isGet) return $this->render("login");
         
-        if(Internaute::validateLogin($post)){
-            $internaute = Internaute::getUserByEmail($post["mail"]);
+        if(Internaute::validateLogin(Yii::$app->request->post())){
+            $internaute = Internaute::getUserByEmail(Yii::$app->request->post()["mail"]);
 
-            if(isset($internaute) && $internaute->validatePassword($post["pass"])){
+            if(isset($internaute) && $internaute->validatePassword(Yii::$app->request->post()["pass"])){
                 Yii::$app->user->login($internaute);
                 return $this->renderPartial("index");
             }
@@ -114,7 +109,20 @@ class SiteController extends Controller
     }
 
     public function actionSignup(){
-        return $this->render("signup");
+        if(Yii::$app->request->isGet) return $this->render("signup");
+
+        $internaute = new Internaute();
+        if($internaute->load(Yii::$app->request->post(),'') && $internaute->validate()){
+            $internaute->pass = sha1($internaute->pass);
+            $internaute->save();
+            return $this->renderPartial("login");
+        }
+ 
+        else{
+            Yii::$app->response->statusCode = 406;
+            return "Informations manquantes";
+        }
+
     }
 
 
@@ -150,10 +158,14 @@ class SiteController extends Controller
     }
 
     public function actionTest(){
-        $internaute = Internaute::getUserByIdentifiant("Fourmi");
+        $internaute = Internaute::getUserByIdentifiant("Azerty");
 
         return $this->render('test.php', [
             'internaute' => $internaute
         ]);
+    }
+
+    public function actionReservation(){
+        if(Yii::$app->user->isGuest) return $this->render("login");
     }
 }

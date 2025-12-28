@@ -62,10 +62,24 @@ class Internaute extends ActiveRecord implements IdentityInterface{
     }
 
     public static function validateLogin($post){
-        return isset($post["mail"]) && isset($post["pass"]) && $post["mail"] !== "" && $post["pass"] !== "";
+        return isset($post["mail"]) && isset($post["pass"]) && 
+        $post["mail"] !== "" && $post["pass"] !== "";
     }
 
     public static function validateSignup($post){
-
+        return isset($post["nom"]) && $post["nom"] !== "" &&
+           isset($post["prenom"]) && $post["prenom"] !== "" &&
+           isset($post["pseudo"]) && $post["pseudo"] !== "" &&
+           isset($post["mail"]) && $post["mail"] !== "" &&
+           isset($post["photo"]) && $post["photo"] !== "" &&
+           isset($post["pass"]) && $post["pass"] !== "";
     }
+
+    public function rules()
+{
+    return [
+        [['nom', 'prenom', 'pseudo', 'mail', 'photo', 'pass'], 'required'],
+        [['permis'], 'string'], 
+    ];
+}
 }
