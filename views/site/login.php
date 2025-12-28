@@ -4,11 +4,9 @@ use yii\web\JqueryAsset;
 
 $this->title = 'Connexion';
 
-$this->registerJsFile(
-    '@web/js/login.js',
-    ['depends' => [JqueryAsset::class]]
-);
 ?>
+
+<script src="js/login.js"></script>
 
 <div class="bg-img d-flex justify-content-center align-items-center auth-bg">
     

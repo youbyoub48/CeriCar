@@ -3,14 +3,15 @@ function resultat(html,status,xhr){
     console.log(status);
     console.log(xhr.status);
     console.log(html);
+
+    $.ajax({
+        url : "index.php?r=site%2Fnavbar",
+        success: function (result){
+            $('nav').html(result);
+        },
+    });
+
     $('#content').html(html);
-    $('#navaccount').html(
-        `<li class="nav-item">
-            <a class="nav-link d-flex align-items-center gap-1" href="index.php?r=site%2Flogout" data-method="post">
-                <span class="material-symbols-outlined">logout</span> Déconnexion
-            </a>
-        </li>
-    `);
 
     document.getElementById("alert").className = "text-light d-flex align-items-center justify-content-center bg-success";
     document.getElementById("alert-text").innerHTML = "Connexion réussi";

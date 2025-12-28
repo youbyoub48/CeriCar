@@ -4,11 +4,9 @@ use yii\web\JqueryAsset;
 
 $this->title = 'Inscription';
 
-$this->registerJsFile(
-    '@web/js/signup.js',
-    ['depends' => [JqueryAsset::class]]
-);
 ?>
+
+<script src="js/signup.js"></script>
 
 <div class="bg-img d-flex justify-content-center align-items-center auth-bg">
     

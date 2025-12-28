@@ -6,6 +6,7 @@
 use app\assets\AppAsset;
 use yii\bootstrap5\Html;
 use  yii\helpers\Url;
+use yii\web\JqueryAsset;
 
 AppAsset::register($this);
 
@@ -15,6 +16,11 @@ $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, 
 $this->registerMetaTag(['name' => 'description', 'content' => $this->params['meta_description'] ?? '']);
 $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
+
+$this->registerJsFile(
+    '@web/js/script.js',
+    ['depends' => [JqueryAsset::class]]
+);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -43,36 +49,40 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="<?= \yii\helpers\Url::to(['/site/index']) ?>">Voyager</a>
+              <button class="nav-link active" aria-current="page" onclick="requete('<?= \yii\helpers\Url::to(['/site/index']) ?>')">Voyager</button>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="<?= \yii\helpers\Url::to(['/site/about']) ?>&depart=Paris&arrivee=Marseille&personnes=1">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="<?= \yii\helpers\Url::to(['/site/test']) ?>">Test</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="<?= \yii\helpers\Url::to(['/site/reservation']) ?>">Mes Réservations</a>
-            </li>
+
+            <?php if (!Yii::$app->user->isGuest): ?>
+              <li class="nav-item">
+                <a class="nav-link" href="<?= \yii\helpers\Url::to(['/site/reservation']) ?>">Mes Réservations</a>
+              </li>
+
+              <?php if (Yii::$app->user->identity->permis !== "" && Yii::$app->user->identity->permis !== null): ?>
+                <li class="nav-item">
+                  <a class="nav-link" href="<?= \yii\helpers\Url::to(['/site/voyage']) ?>">Mes Voyages</a>
+                </li>
+              <?php endif; ?>
+
+            <?php endif; ?>
           </ul>
 
           <ul class="navbar-nav ms-auto" id="navaccount">
             <?php if (Yii::$app->user->isGuest): ?>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-1" href="<?= Url::to(['/site/signup']) ?>">
+                    <button class="nav-link d-flex align-items-center gap-1" onclick="requete('<?= Url::to(['/site/signup']) ?>')">
                         <span class="material-symbols-outlined">person_add</span> Inscription
-                    </a>
+                    </button>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-1" href="<?= Url::to(['/site/login']) ?>">
+                    <button class="nav-link d-flex align-items-center gap-1" onclick="requete('<?= Url::to(['/site/login']) ?>')">
                         <span class="material-symbols-outlined">login</span> Connexion
-                    </a>
+                    </button>
                 </li>
             <?php else: ?>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-1" href="<?= Url::to(['/site/logout']) ?>" data-method="post">
+                    <button class="nav-link d-flex align-items-center gap-1" onclick="requete('<?= Url::to(['/site/logout']) ?>',true)">
                         <span class="material-symbols-outlined">logout</span> Déconnexion 
-                    </a>
+                    </button>
                 </li>
             <?php endif; ?>
           </ul>

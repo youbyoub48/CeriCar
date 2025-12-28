@@ -36,7 +36,7 @@ function rechercher(){
     console.log(personnes);
 
     $.ajax({
-        url : "https://pedago.univ-avignon.fr/~uapv2305363/cericar/web/index.php?r=site%2Fsearch&depart="+depart+"&arrivee="+arrivee+"&personnes="+personnes,
+        url : "index.php?r=site%2Fsearch&depart="+depart+"&arrivee="+arrivee+"&personnes="+personnes,
         success: resultat,
         error: erreur
     });

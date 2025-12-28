@@ -18,25 +18,7 @@ class SiteController extends Controller
      */
     public function behaviors()
     {
-        return [
-            'access' => [
-                'class' => AccessControl::class,
-                'only' => ['logout'],
-                'rules' => [
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::class,
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
+        return [];
     }
 
     /**
@@ -62,6 +44,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        if(Yii::$app->request->isAjax) return $this->renderPartial("index");
         return $this->render('index');
     }
 
@@ -72,7 +55,7 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if(Yii::$app->request->isGet) return $this->render("login");
+        if(Yii::$app->request->isGet) return $this->renderPartial("login");
         
         if(Internaute::validateLogin(Yii::$app->request->post())){
             $internaute = Internaute::getUserByEmail(Yii::$app->request->post()["mail"]);
@@ -105,11 +88,11 @@ class SiteController extends Controller
     {
         Yii::$app->user->logout();
 
-        return $this->goHome();
+        return $this->renderPartial("index");
     }
 
     public function actionSignup(){
-        if(Yii::$app->request->isGet) return $this->render("signup");
+        if(Yii::$app->request->isGet) return $this->renderPartial("signup");
 
         $internaute = new Internaute();
         if($internaute->load(Yii::$app->request->post(),'') && $internaute->validate()){
@@ -123,18 +106,6 @@ class SiteController extends Controller
             return "Informations manquantes";
         }
 
-    }
-
-
-    public function actionAbout($depart,$arrivee,$personnes)
-    {
-        $trajet = Trajet::getTrajet($depart,$arrivee);
-        $voyages = Voyage::getVoyagesByTrajetId($trajet->id);
-        return $this->render('search',[
-            'voyages' => $voyages,
-            'trajet' => $trajet,
-            'personnes' => $personnes
-        ]);
     }
 
     public function actionSearch($depart,$arrivee,$personnes)
@@ -158,14 +129,26 @@ class SiteController extends Controller
     }
 
     public function actionTest(){
-        $internaute = Internaute::getUserByIdentifiant("Azerty");
+        $internaute = Internaute::getUserByIdentifiant("Fourmi");
 
-        return $this->render('test.php', [
+        return $this->renderPartial('test.php', [
             'internaute' => $internaute
         ]);
     }
 
     public function actionReservation(){
         if(Yii::$app->user->isGuest) return $this->render("login");
+
+        return $this->render("reservation");
+    }
+
+    public function actionVoyage(){
+        if(Yii::$app->user->isGuest) return $this->render("login");
+
+        return $this->render("voyage");
+    }
+
+    public function actionNavbar(){
+        return $this->renderPartial("navbar");
     }
 }
