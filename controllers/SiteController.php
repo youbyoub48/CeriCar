@@ -7,9 +7,12 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
+
 use app\models\Internaute;
+use app\models\MarqueVehicule;
 use app\models\Voyage;
 use app\models\Trajet;
+use app\models\TypeVehicule;
 
 class SiteController extends Controller
 {
@@ -137,18 +140,51 @@ class SiteController extends Controller
     }
 
     public function actionReservation(){
-        if(Yii::$app->user->isGuest) return $this->render("login");
+        if(Yii::$app->user->isGuest) return $this->renderPartial("login");
 
-        return $this->render("reservation");
+        return $this->renderPartial("reservation");
     }
 
     public function actionVoyage(){
-        if(Yii::$app->user->isGuest) return $this->render("login");
+        if(Yii::$app->user->isGuest) return $this->renderPartial("login");
 
-        return $this->render("voyage");
+        return $this->renderPartial("voyage");
     }
 
     public function actionNavbar(){
         return $this->renderPartial("navbar");
+    }
+
+    public function actionProposer(){
+        if(Yii::$app->user->isGuest) return $this->renderPartial("login");
+
+        if(Yii::$app->request->isGet) return $this->renderPartial("proposer", [
+            "types" => TypeVehicule::findBySql("SELECT * FROM ".TypeVehicule::tableName())->all(),
+            "marques" => MarqueVehicule::findBySql("SELECT * FROM ".MarqueVehicule::tableName())->all(),
+        ]);
+
+        $voyage = new Voyage();
+        
+        if($voyage->load(Yii::$app->request->post(),'')){
+            $voyage->conducteur = Yii::$app->user->identity->id;
+            $voyage->trajet = Trajet::getTrajet(Yii::$app->request->post()['depart'],Yii::$app->request->post()['arrivee']);
+
+            if($voyage->trajet != null) $voyage->trajet = $voyage->trajet->id;
+            
+            if($voyage->validate()){
+                $voyage->save();
+                return $this->renderPartial("voyage");
+            }
+
+            else{
+                Yii::$app->response->statusCode = 406;
+                return "Informations manquantes ou incorects";
+            }
+        }
+
+        else{
+            Yii::$app->response->statusCode = 404;
+            return "Problème";
+        }
     }
 }

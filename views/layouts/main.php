@@ -29,7 +29,7 @@ $this->registerJsFile(
     <title><?= Html::encode($this->title) ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=airline_seat_recline_normal,arrow_forward,badge,directions_car,group,image,location_on,lock,login,logout,mail,person,person_add" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=add_circle,airline_seat_recline_normal,arrow_forward,badge,directions_car,euro,group,group_add,image,info,location_on,lock,login,logout,luggage,mail,person,person_add,pin_drop,schedule,stars,trip_origin" />
     <link rel="stylesheet" href="css/site2.css">
     <?php $this->head() ?>
 </head>
@@ -54,12 +54,12 @@ $this->registerJsFile(
 
             <?php if (!Yii::$app->user->isGuest): ?>
               <li class="nav-item">
-                <a class="nav-link" href="<?= \yii\helpers\Url::to(['/site/reservation']) ?>">Mes Réservations</a>
+                <button class="nav-link" onclick="requete('<?= \yii\helpers\Url::to(['/site/reservation']) ?>')">Mes Réservations</button>
               </li>
 
               <?php if (Yii::$app->user->identity->permis !== "" && Yii::$app->user->identity->permis !== null): ?>
                 <li class="nav-item">
-                  <a class="nav-link" href="<?= \yii\helpers\Url::to(['/site/voyage']) ?>">Mes Voyages</a>
+                  <button class="nav-link" onclick="requete('<?= \yii\helpers\Url::to(['/site/voyage']) ?>')">Mes Voyages</button>
                 </li>
               <?php endif; ?>
 
@@ -96,7 +96,7 @@ $this->registerJsFile(
   </div>
 </header>
 
-<div id="content">
+<div id="content" >
 <?= $content ?>
 </div>
 

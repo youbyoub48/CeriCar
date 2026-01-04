@@ -47,4 +47,12 @@ class Voyage extends ActiveRecord{
         }
         return $this->nbplacedispo - $somme;
     }
+
+    public function rules(){
+        return [
+            [['conducteur', 'trajet', 'idtypev', 'idmarquev', 'tarif', 'nbplacedispo','nbbagage','heuredepart'], 'required'],
+            [['conducteur','trajet','idtypev','idmarquev','nbplacedispo','nbbagage','heuredepart'], 'integer'], 
+            [['tarif'], 'double']
+        ];
+    }
 }

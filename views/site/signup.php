@@ -1,6 +1,5 @@
 <?php
 use yii\helpers\Url;
-use yii\web\JqueryAsset;
 
 $this->title = 'Inscription';
 
@@ -88,7 +87,7 @@ $this->title = 'Inscription';
             <button type="button" class="btn-search w-100" onclick="inscrire()">S'inscrire</button>
             
             <div class="text-center mt-3">
-                <a href="<?= Url::to(['site/login']) ?>" class="small text-muted" style="text-decoration: none;">Déjà inscrit ? Se connecter</a>
+                <button type="button" data-bs-toggle="button" onclick="requete('<?= Url::to(['site/login']) ?>')" class="small text-muted btn" style="text-decoration: none;">Déjà inscrit ? Se connecter</a>
             </div>
     </div>
 </div>

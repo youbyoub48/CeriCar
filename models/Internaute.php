@@ -75,11 +75,10 @@ class Internaute extends ActiveRecord implements IdentityInterface{
            isset($post["pass"]) && $post["pass"] !== "";
     }
 
-    public function rules()
-{
-    return [
-        [['nom', 'prenom', 'pseudo', 'mail', 'photo', 'pass'], 'required'],
-        [['permis'], 'string'], 
-    ];
-}
+    public function rules(){
+        return [
+            [['nom', 'prenom', 'pseudo', 'mail', 'photo', 'pass'], 'required'],
+            [['permis'], 'string'], 
+        ];
+    }
 }

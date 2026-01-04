@@ -18,12 +18,12 @@ use  yii\helpers\Url;
 
             <?php if (!Yii::$app->user->isGuest): ?>
               <li class="nav-item">
-                <a class="nav-link" href="<?= \yii\helpers\Url::to(['/site/reservation']) ?>">Mes Réservations</a>
+                <button class="nav-link" onclick="requete('<?= \yii\helpers\Url::to(['/site/reservation']) ?>')">Mes Réservations</button>
               </li>
 
               <?php if (Yii::$app->user->identity->permis !== "" && Yii::$app->user->identity->permis !== null): ?>
                 <li class="nav-item">
-                  <a class="nav-link" href="<?= \yii\helpers\Url::to(['/site/voyage']) ?>">Mes Voyages</a>
+                  <button class="nav-link" onclick="requete('<?= \yii\helpers\Url::to(['/site/voyage']) ?>')">Mes Voyages</button>
                 </li>
               <?php endif; ?>
 

@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 $this->title = 'Voyages';
 
@@ -8,8 +9,13 @@ $this->title = 'Voyages';
     
     <div class="d-flex justify-content-between align-items-center results-header">
         <h3 class="m-0">Mes Voyages</h3>
-    </div>
 
+        <button onclick="requete('<?= Url::to(['site/proposer']) ?>')" class="btn btn-primary d-flex align-items-center px-4 shadow-sm">
+            <span class="material-symbols-outlined me-2">add_circle</span>
+            Proposer un voyage
+        </button>
+    </div>
+    
     <?php foreach (Yii::$app->user->identity->voyages as $voyage): ?>
         <div class="trip-card">
             

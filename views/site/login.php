@@ -34,7 +34,7 @@ $this->title = 'Connexion';
         <button type="button" class="btn-search w-100" onclick="connexion()">Se connecter</button>
         
         <div class="text-center mt-3">
-            <a href="<?= Url::to(['site/signup']) ?>" class="small text-muted" style="text-decoration: none;">Pas encore de compte ? S'inscrire</a>
+            <button type="button" data-bs-toggle="button" onclick="requete('<?= Url::to(['site/signup']) ?>')" class="small text-muted btn" style="text-decoration: none;">Pas encore de compte ? S'inscrire</button>
         </div>
     </div>
 </div>
