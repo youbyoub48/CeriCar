@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 
 use app\models\Internaute;
 use app\models\MarqueVehicule;
+use app\models\Reservation;
 use app\models\Voyage;
 use app\models\Trajet;
 use app\models\TypeVehicule;
@@ -188,6 +189,28 @@ class SiteController extends Controller
         else{
             Yii::$app->response->statusCode = 404;
             return "Problème";
+        }
+    }
+
+    public function actionReserver(){
+        if(!Yii::$app->request->isPost){
+            Yii::$app->response->statusCode = 405;
+            return "405 Method Not Allowed";
+        }
+
+        $reservation = new Reservation();
+        $reservation->voyage = Voyage::findOne(Yii::$app->request->post()['voyage'])->id;
+        $reservation->voyageur = Internaute::findOne(Yii::$app->request->post()['user'])->id;
+        $reservation->nbplaceresa = Yii::$app->request->post()['personnes'];
+
+        if($reservation->validate()){
+            $reservation->save();
+            return Yii::$app->request->getCsrfToken();
+        }
+
+        else{
+            Yii::$app->response->statusCode = 406;
+            return "Information Incorect";
         }
     }
 }

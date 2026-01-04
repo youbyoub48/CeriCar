@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 $this->title = 'Résultats de recherche - CeriCar';
 
@@ -37,8 +38,14 @@ $this->title = 'Résultats de recherche - CeriCar';
             </div>
 
             <div class="trip-details">
-                <div class="trip-price">
-                    <?= Html::encode(($voyage->tarif*$voyage->trajetInfo->distance)*$personnes) ?> €
+                <div class="d-flex flex-column align-items-end">
+                    <div class="trip-price">
+                        <?= Html::encode(($voyage->tarif*$voyage->trajetInfo->distance)*$personnes) ?> €
+                    </div>
+
+                    <?php if($voyage->getAvailablePlaces() >= $personnes): ?>
+                        <button onclick="<?= (Yii::$app->user->isGuest) ? "requete('".Url::to(['site/login'])."')" : "reserver(".Yii::$app->user->identity->id.",$voyage->id,$personnes)" ?>" class="btn btn-primary btn-reserve shadow-sm">Réserver</button>
+                    <?php endif; ?>
                 </div>
 
                 <div class="seats-badge <?= ($voyage->getAvailablePlaces() <= $personnes) ? 'low-stock' : '' ?>">

@@ -1,5 +1,5 @@
 
-function resultat(json,status,xhr){
+function resultatLogin(json,status,xhr){
     console.log(status);
     console.log(xhr.status);
     console.log(json);
@@ -19,7 +19,7 @@ function resultat(json,status,xhr){
     document.getElementById("alert-text").innerHTML = "Connexion réussi";
 }
 
-function erreur(xhr,status,error){
+function erreurLogin(xhr,status,error){
     console.log("erreur")
     console.log(status);
     console.log(xhr.status);
@@ -43,7 +43,7 @@ function connexion(){
         url : "index.php?r=site%2Flogin",
         type : "POST",
         data: {"mail" : email, "pass" : pass},
-        success: resultat,
-        error: erreur
+        success: resultatLogin,
+        error: erreurLogin
     });
 }

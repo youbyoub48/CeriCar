@@ -27,4 +27,12 @@ class Reservation extends ActiveRecord{
     public function getVoyageInfo(){
         return $this->hasOne(Voyage::class, ["id" => "voyage"]);
     }
+
+    public function rules()
+    {
+        return [
+            [['voyage', 'voyageur', 'nbplaceresa'], 'required'],
+            [['voyage','voyageur','nbplaceresa'], 'integer'], 
+        ];
+    }
 }

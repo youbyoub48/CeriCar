@@ -52,7 +52,8 @@ class Voyage extends ActiveRecord{
         return [
             [['conducteur', 'trajet', 'idtypev', 'idmarquev', 'tarif', 'nbplacedispo','nbbagage','heuredepart'], 'required'],
             [['conducteur','trajet','idtypev','idmarquev','nbplacedispo','nbbagage','heuredepart'], 'integer'], 
-            [['tarif'], 'double']
+            [['tarif'], 'double'],
+            [['contraintes'], 'string']
         ];
     }
 }

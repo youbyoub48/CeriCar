@@ -1,5 +1,5 @@
 
-function resultat(html,status,xhr){
+function resultatSignup(html,status,xhr){
     console.log(status);
     console.log(xhr.status);
     console.log(html);
@@ -9,7 +9,7 @@ function resultat(html,status,xhr){
     document.getElementById("alert-text").innerHTML = "Inscription réussi";
 }
 
-function erreur(xhr,status,error){
+function erreurSignup(xhr,status,error){
     console.log("erreur")
     console.log(status);
     console.log(xhr.status);
@@ -42,7 +42,7 @@ function inscrire(){
         url : "index.php?r=site%2Fsignup",
         type : "POST",
         data: {"nom": nom, "prenom": prenom, "pseudo": pseudo, "permis": permis, "mail": mail, "photo": photo, "pass": pass},
-        success: resultat,
-        error: erreur
+        success: resultatSignup,
+        error: erreurSignup
     });
 }

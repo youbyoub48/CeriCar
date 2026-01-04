@@ -1,7 +1,7 @@
 console.log("test");
 
 
-function resultat(html,status,xhr){
+function resultatRechercher(html,status,xhr){
     console.log(status);
     console.log(xhr.status);
     console.log(html);
@@ -11,7 +11,7 @@ function resultat(html,status,xhr){
     document.getElementById("alert-text").innerHTML = "Voyage trouvé";
 }
 
-function erreur(xhr,status,error){
+function erreurRechercher(xhr,status,error){
     console.log("erreur")
     console.log(status);
     console.log(xhr.status);
@@ -37,7 +37,44 @@ function rechercher(){
 
     $.ajax({
         url : "index.php?r=site%2Fsearch&depart="+depart+"&arrivee="+arrivee+"&personnes="+personnes,
-        success: resultat,
-        error: erreur
+        success: resultatRechercher,
+        error: erreurRechercher
+    });
+}
+
+function resultatReserver(token,status,xhr){
+    console.log(status);
+    console.log(xhr.status);
+    console.log(token);
+    
+    $('meta[name="csrf-token"]').attr("content", token);
+    document.getElementById("alert").className = "text-light d-flex align-items-center justify-content-center bg-success";
+    document.getElementById("alert-text").innerHTML = "Reservation effectué";
+}
+
+function erreurReserver(xhr,status,error){
+    console.log("erreur")
+    console.log(status);
+    console.log(xhr.status);
+    console.log(error);
+
+    document.getElementById("alert").className = "text-light d-flex align-items-center justify-content-center bg-danger";
+
+    document.getElementById("alert-text").innerHTML = "Problème de connexion avec le serveur";
+
+    $('#result').html("");
+}
+
+function reserver(user,voyage,personnes){
+    console.log(user);
+    console.log(voyage);
+    console.log(personnes);
+
+    $.ajax({
+        url : "index.php?r=site%2Freserver",
+        type : "POST",
+        data: {"user" : user, "voyage" : voyage, "personnes": personnes},
+        success: resultatReserver,
+        error: erreurReserver
     });
 }
