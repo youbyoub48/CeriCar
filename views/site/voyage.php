@@ -10,10 +10,12 @@ $this->title = 'Voyages';
     <div class="d-flex justify-content-between align-items-center results-header">
         <h3 class="m-0">Mes Voyages</h3>
 
+        <?php if(Yii::$app->user->identity->permis != ""): ?>
         <button onclick="requete('<?= Url::to(['site/proposer']) ?>')" class="btn btn-primary d-flex align-items-center px-4 shadow-sm">
             <span class="material-symbols-outlined me-2">add_circle</span>
             Proposer un voyage
         </button>
+        <?php endif;?>
     </div>
     
     <?php foreach (Yii::$app->user->identity->voyages as $voyage): ?>

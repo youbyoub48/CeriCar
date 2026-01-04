@@ -65,7 +65,10 @@ class SiteController extends Controller
 
             if(isset($internaute) && $internaute->validatePassword(Yii::$app->request->post()["pass"])){
                 Yii::$app->user->login($internaute);
-                return $this->renderPartial("index");
+                return $this->asJson([
+                    'html' => $this->renderPartial("index"),
+                    'token' => Yii::$app->request->getCsrfToken(),
+                ]);
             }
 
             else{

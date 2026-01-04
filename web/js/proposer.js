@@ -6,7 +6,7 @@ function resultat(html,status,xhr){
     $('#content').html(html);
 
     document.getElementById("alert").className = "text-light d-flex align-items-center justify-content-center bg-success";
-    document.getElementById("alert-text").innerHTML = "Inscription réussi";
+    document.getElementById("alert-text").innerHTML = "Ajout réussi";
 }
 
 function erreur(xhr,status,error){

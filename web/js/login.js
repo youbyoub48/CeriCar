@@ -1,8 +1,9 @@
 
-function resultat(html,status,xhr){
+function resultat(json,status,xhr){
     console.log(status);
     console.log(xhr.status);
-    console.log(html);
+    console.log(json);
+    console.log(json["token"]);
 
     $.ajax({
         url : "index.php?r=site%2Fnavbar",
@@ -11,7 +12,8 @@ function resultat(html,status,xhr){
         },
     });
 
-    $('#content').html(html);
+    $('meta[name="csrf-token"]').attr("content", json["token"]);
+    $('#content').html(json['html']);
 
     document.getElementById("alert").className = "text-light d-flex align-items-center justify-content-center bg-success";
     document.getElementById("alert-text").innerHTML = "Connexion réussi";

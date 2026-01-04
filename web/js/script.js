@@ -1,5 +1,5 @@
 
-var recharger = false
+var recharger = false;
 
 function resultatlien(html,status,xhr){
     console.log(status);
